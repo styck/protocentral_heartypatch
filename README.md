@@ -1,3 +1,5 @@
+Fork to update to current toolchain and add functionality.
+
 ProtoCentral Hearty Patch Single-lead ECG monitor
 =======================================================
 
