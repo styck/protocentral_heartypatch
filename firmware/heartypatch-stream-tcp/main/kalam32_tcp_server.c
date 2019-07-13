@@ -14,7 +14,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "driver/ledc.h"
-#include "bt.h"
+#include "esp_bt.h" // bt.h deprecated, use esp_bt.h
 #include "driver/i2c.h"
 #include "driver/uart.h"
 #include "driver/sdmmc_host.h"
@@ -112,7 +112,7 @@ char* tcpip_get_reason(int err)
 int show_socket_error_code(int socket)
 {
     int result;
-    u32_t optlen = sizeof(int);
+    u32_t optlen = sizeof(result);
     getsockopt(socket, SOL_SOCKET, SO_ERROR, &result, &optlen);
     ESP_LOGI(TAG, "socket error %d reason: %s", result, tcpip_get_reason(result));
     return result;
@@ -144,7 +144,7 @@ void close_socket()
 esp_err_t create_tcp_server()
 {
     ESP_LOGI(TAG, "server socket....port=%d\n", DEFAULT_PORT);
-    server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    server_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (server_socket < 0)
     {
     	 show_socket_error_code(server_socket);

@@ -14,7 +14,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "driver/ledc.h"
-#include "bt.h"
+#include "esp_bt.h"	// bt.h deprecated
 #include "driver/i2c.h"
 #include "driver/uart.h"
 #include "driver/sdmmc_host.h"
@@ -48,7 +48,10 @@ static EventGroupHandle_t wifi_event_group;
 const int CONNECTED_BIT_kalam = BIT0;
 
 uint8_t* db;
-mdns_server_t * mdns = NULL;
+//#undef CONFIG_MDNS_ENABLE
+//#ifdef CONFIG_MDNS_ENABLE
+//mdns_server_t * mdns = NULL;
+//#endif
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
@@ -88,12 +91,18 @@ void kalam_wifi_init(void)
       ESP_ERROR_CHECK( esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
       ESP_ERROR_CHECK( esp_wifi_start() );
 
-#ifdef CONFIG_MDNS_ENABLE
-      esp_err_t err = mdns_init(TCPIP_ADAPTER_IF_STA, &mdns);
-      ESP_ERROR_CHECK( mdns_set_hostname(mdns, KALAM32_MDNS_NAME) );
-      ESP_ERROR_CHECK( mdns_set_instance(mdns, KALAM32_MDNS_NAME) );
-#endif
+// Old code left for referenace, remove when verified.
+//#ifdef CONFIG_MDNS_ENABLE
+//      esp_err_t err = mdns_init(TCPIP_ADAPTER_IF_STA, &mdns);
+//      ESP_ERROR_CHECK( mdns_set_hostname(mdns, KALAM32_MDNS_NAME) );
+//      ESP_ERROR_CHECK( mdns_set_instance(mdns, KALAM32_MDNS_NAME) );
+//#endif
 
+#ifdef CONFIG_MDNS_ENABLE
+      ESP_ERROR_CHECK( mdns_init() );
+      ESP_ERROR_CHECK(mdns_hostname_set(KALAM32_MDNS_NAME));
+      ESP_ERROR_CHECK(mdns_instance_name_set(KALAM32_MDNS_NAME));
+#endif
 }
 
 void app_main(void)
