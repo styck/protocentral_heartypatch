@@ -14,7 +14,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "driver/ledc.h"
-#include "bt.h"
+#include "esp_bt.h"
 #include "driver/i2c.h"
 #include "driver/uart.h"
 #include "driver/sdmmc_host.h"
@@ -54,7 +54,6 @@ extern SemaphoreHandle_t updateRRSemaphore ;
 //send data
 static void send_data(void *pvParameters)
 {
-    int len = 0;
     uint8_t* data_packet;
     uint8_t databuff[DEFAULT_PKTSIZE];
     memset(databuff, PACK_BYTE_IS, DEFAULT_PKTSIZE);
@@ -92,7 +91,7 @@ static void send_data(void *pvParameters)
 		  data_packet[18] =  0x0b;
 
 
-	 	  len = send(connect_socket,data_packet,19 , 0);
+	 	  send(connect_socket,data_packet,19 , 0);
 		  rtor_detected = false;
 
 	 }

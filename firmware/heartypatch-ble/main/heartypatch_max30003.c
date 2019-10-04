@@ -10,7 +10,7 @@
 #include "nvs_flash.h"
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
-#include "bt.h"
+#include "esp_bt.h"
 #include "driver/ledc.h"
 #include "driver/uart.h"
 

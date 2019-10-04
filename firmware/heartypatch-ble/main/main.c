@@ -14,7 +14,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "driver/ledc.h"
-#include "bt.h"				//use this for esp-idf versions below 3.0 
+#include "esp_bt.h"	// bt.h deprecated
 #include "driver/i2c.h"
 #include "driver/uart.h"
 #include "driver/sdmmc_host.h"

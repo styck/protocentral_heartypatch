@@ -30,7 +30,7 @@ void adc1task(void* arg)
 	vTaskDelay(500/portTICK_PERIOD_MS);
 	while(1)
 	{
-				adc_val=adc1_get_voltage(ADC1_CHANNEL);
+				adc_val = adc1_get_raw(ADC1_CHANNEL);
 				//bat=(1.2424*adc_val)*(REFERENCE_VOLT/4096)		
 				battery += adc_val;
 				if(bat_count == 9){						//taking average of 10 values.
@@ -88,9 +88,11 @@ void adc1task(void* arg)
   		  battery=0;
 		}
 		else
+		{				
 		  bat_count++;
+		}
 
-		  vTaskDelay(4000/portTICK_PERIOD_MS);
+		vTaskDelay(4000/portTICK_PERIOD_MS);
     }
 }
 
